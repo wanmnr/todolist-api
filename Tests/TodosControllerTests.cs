@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using todolist_api.Controllers;
-using todolist_api.Models;
+using todolist_api.Data;
 using Xunit;
 
 namespace Tests

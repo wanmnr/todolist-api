@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace todolist_api.Models
+namespace todolist_api.Data
 {
     [MetadataType(typeof(TodoMetaData))]
     public partial class Todo

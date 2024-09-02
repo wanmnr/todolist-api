@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using todolist_api.Models;
+using todolist_api.Data;
 
 namespace todolist_api.Services;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace todolist_api.Models
+namespace todolist_api.Data
 {
     public partial class Todo
     {
