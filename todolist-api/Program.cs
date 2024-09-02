@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.OpenApi.Models;
 using todolist_api.Models;
 using todolist_api.Services;
 
@@ -14,6 +15,21 @@ Env.Load();
 ConfigureDatabase(builder);
 
 // Add services to the container.
+
+// Configure Swagger generation
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "ToDo List API",
+        Description = "An API to manage ToDo items.",
+    });
+
+    // Include XML comments (if enabled in the project file)
+    var xmlFilename = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
 
 builder.Services.AddCors(options =>
     {
@@ -31,19 +47,22 @@ builder.Services.AddMemoryCache();
 builder.Services.AddScoped<TodoService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
-// cors
-app.UseCors("AllowLocalhost");
 
 // Configure middleware / http pipeline for development environment
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "ToDo List API v1");
+        c.RoutePrefix = "swagger"; // Set Swagger UI to be at the app's root (optional)
+    });
 }
+
+// cors
+app.UseCors("AllowLocalhost");
 
 // Common middleware configuration for all environments
 app.UseHttpsRedirection();
