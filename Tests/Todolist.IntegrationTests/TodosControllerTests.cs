@@ -7,7 +7,7 @@ using todolist_api.Controllers;
 using todolist_api.Data;
 using Xunit;
 
-namespace Tests
+namespace Todolist.IntegrationTests
 {
     public class TodosControllerTests
     {
